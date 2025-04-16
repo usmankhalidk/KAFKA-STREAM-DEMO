@@ -1,0 +1,46 @@
+# Node.js
+consumer-service/node_modules/
+producer-api/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Log files
+logs
+*.log
+*.log.*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Optional npm package logs
+package-lock.json
+yarn.lock
+
+# Coverage directory used by testing tools
+coverage/
+
+# Build output directory
+build/
+dist/
+
+# PostgreSQL
+*.sql
+*.pgsql
+*.dump
+
+# WebSocket specific files
+ws_log/
+
+# Kafka specific files
+kafka-logs/

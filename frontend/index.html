@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kafka Stream Viewer</title>
+</head>
+<body>
+  <h2>Send Data to Kafka</h2>
+  <form id="dataForm">
+    <input type="text" id="name" placeholder="Name" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <button type="submit">Send</button>
+  </form>
+
+  <h2>Live Data</h2>
+  <ul id="dataList"></ul>
+
+  <script>
+    // WebSocket connection to receive live data
+    const ws = new WebSocket('ws://localhost:8081');  // Make sure this matches the server's port
+
+    // Handle incoming WebSocket messages (live data)
+    ws.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      console.log('New data received:', data);
+
+      // Display the incoming data in the frontend
+      const dataList = document.getElementById('dataList');
+      const listItem = document.createElement('li');
+      listItem.textContent = `Name: ${data.name}, Email: ${data.email}`;
+      dataList.appendChild(listItem);
+    };
+
+    // Form submission to send data to the Kafka producer
+    document.getElementById('dataForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      // Send data to the Kafka producer API
+      await fetch('http://localhost:4153/api/data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+
+      // Clear the form after submission
+      document.getElementById('dataForm').reset();
+    });
+  </script>
+</body>
+</html>
